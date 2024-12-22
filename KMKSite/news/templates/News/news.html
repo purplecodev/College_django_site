@@ -1,0 +1,67 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    {{ title }} :: {{ block.super }}
+{% endblock %}
+
+{% block content %}
+<h1>Новости колледжа</h1>
+{% for i in news %}
+<div class="card mb-3">
+    <div class="row g-0">
+        <!-- Фото новости -->
+        <div class="col-12 col-md-4">
+            {% if i.photo %}
+            <img src="{{ i.photo.url }}" class="img-fluid" alt="Фото новости">
+            {% else %}
+            <div class="alert alert-secondary" role="alert">Фото нет</div>
+            {% endif %}
+        </div>
+
+        <!-- Контент новости -->
+        <div class="col-12 col-md-8">
+            <div class="card-body">
+                <h5 class="card-title text-primary">{{ i.title }}</h5>
+                <p class="card-text">{{ i.content|truncatewords:60|linebreaks }}</p>
+                <a href="{{ i.get_absolute_url }}" class="btn btn-outline-primary">Читать далее</a>
+            </div>
+        </div>
+    </div>
+    <div class="card-footer text-muted">
+        {{ i.created_at|date:'Y-m-d H:i' }}
+    </div>
+</div>
+{% endfor %}
+{% endblock %}
+
+{% block pagination %}
+
+{% if page_obj.has_other_pages %}
+<nav aria-label="..." style="margin-left: 900px;">
+    <ul class="pagination">
+        {% if page_obj.has_previous %}
+        <li class="page-item disabled">
+            <a class="page-link" href="?page-{{ page.obj.previous_page_number }}"><</a>
+        </li>
+        {% endif %}
+        {% for p in page_obj.paginator.page_range %}
+        {% if page_obj.number == p %}
+        <li class="'page_item active'" aria-current="page">
+            <a class="page-link" href="?page={{ p }}" style="color: red;">{{ p }}</a>
+        </li>
+        {% elif p > page_obj.number|add:-3 and p < page_obj.number|add:3 %}
+        <li class="page-item">
+            <a class="page-link" href="?page={{ p }}">{{ p }}</a>
+        </li>
+        {% endif %}
+        {% endfor %}
+        {% if page_obj.has_next %}
+        <li class="page-item disabled">
+            <a class="page-link" href="?page-{{ page.obj.next_page_number }}">></a>
+        </li>
+        {% endif %}
+    </ul>
+</nav>
+{% endif %}
+{% endblock %}
+

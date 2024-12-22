@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    {{ title }} :: {{ block.super }}
+{% endblock %}
+
+{% block sidebar %}
+    {% include 'inc/_sidebar.html' %}
+{% endblock %}
+
+{% block content %}
+<div class="card mb-4 shadow-sm">
+    <div class="card-body">
+        {% if not news_item.content %}
+        <h5 class="card-title text-primary">{{ news_item.title }}</h5>
+        {% endif %}
+        <div class="text-center mb-3">
+
+            {% if news_item.photo %}
+                <img src="{{ news_item.photo.url }}" class="img-fluid" width="350" alt="Photo">
+            {% else %}
+                <div class="alert alert-secondary" role="alert">Фото отсутствует</div>
+            {% endif %}
+        </div>
+        {% if news_item.content %}
+        <h5 class="card-title text-primary">{{ news_item.title }}</h5>
+        {% endif %}
+        <p class="card-text">{{ news_item.content }}</p>
+    </div>
+    <div class="card-footer text-muted text-end">
+        Опубликовано: {{ news_item.created_at|date:"d M Y H:i" }}
+    </div>
+    <a href="{% url 'news' %}" class="btn btn-secondary">Назад</a>
+</div>
+{% endblock %}
