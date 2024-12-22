@@ -3,6 +3,7 @@
 ---
 
 # College_django_site
+![{F282256E-2CFC-4DF4-8F55-B53D46730C12}](https://github.com/user-attachments/assets/620e5792-5ea6-4872-bc3d-0eb089c4604a)
 
 **Описание:**
 
